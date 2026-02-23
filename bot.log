@@ -8,3 +8,19 @@
 2026-02-23 23:36:19,478 - pishro_bot - INFO - Bot ready to receive updates!
 2026-02-23 23:36:19,478 - pishro_bot - INFO - Starting polling loop...
 2026-02-23 23:36:19,478 - pishro_bot - INFO - Starting polling loop...
+Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8463718353)
+Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Sleep for 1.544324 seconds and try again... (tryings = 1, bot id = 8463718353)
+Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Sleep for 1.932240 seconds and try again... (tryings = 2, bot id = 8463718353)
+Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8463718353)
+Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Sleep for 1.256397 seconds and try again... (tryings = 1, bot id = 8463718353)
+Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Sleep for 1.718610 seconds and try again... (tryings = 2, bot id = 8463718353)
+Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Sleep for 2.242779 seconds and try again... (tryings = 3, bot id = 8463718353)
+Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Sleep for 3.023466 seconds and try again... (tryings = 4, bot id = 8463718353)
