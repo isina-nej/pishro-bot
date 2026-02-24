@@ -42,10 +42,11 @@ class PishroBot:
     
     def _setup_handlers(self):
         """Register all bot handlers."""
-        from app.handlers import auth, investor, accountant, admin
+        from app.handlers import auth, investor, accountant, admin, settings
         
         # Register routers
         self.dp.include_router(auth.router)
+        self.dp.include_router(settings.router)
         self.dp.include_router(investor.router)
         self.dp.include_router(accountant.router)
         self.dp.include_router(admin.router)

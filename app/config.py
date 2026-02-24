@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     # API
     API_HOST: str = Field("0.0.0.0", description="API host")
     API_PORT: int = Field(8000, description="API port")
+    API_URL: str = Field("http://localhost:8000", description="API base URL for Bot to use")
     
     # Timezone
     TZ: str = Field("UTC", description="Timezone")

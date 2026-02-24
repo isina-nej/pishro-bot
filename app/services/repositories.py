@@ -68,6 +68,12 @@ class UserRepository:
         result = await self.session.execute(stmt)
         return result.scalars().all()
     
+    async def get_all(self, skip: int = 0, limit: int = 10) -> List[User]:
+        """Get all users with pagination."""
+        stmt = select(User).order_by(User.created_at.desc()).offset(skip).limit(limit)
+        result = await self.session.execute(stmt)
+        return result.scalars().all()
+    
     async def search_by_name_or_phone(self, query: str) -> List[User]:
         """Search users by name or phone number."""
         search_term = f"%{query}%"
@@ -105,7 +111,16 @@ class InvestmentRepository:
             joinedload(Investment.valuations)
         ).order_by(Investment.start_date.desc())
         result = await self.session.execute(stmt)
-        return result.scalars().all()
+        return result.unique().scalars().all()
+    
+    async def get_all(self, skip: int = 0, limit: int = 10) -> List[Investment]:
+        """Get all investments with pagination."""
+        stmt = select(Investment).order_by(Investment.start_date.desc()).offset(skip).limit(limit).options(
+            joinedload(Investment.transactions),
+            joinedload(Investment.valuations)
+        )
+        result = await self.session.execute(stmt)
+        return result.unique().scalars().all()
     
     async def create(self, user_id: int, contract_type: ContractType, 
                     initial_amount: float, start_date: date,
@@ -162,6 +177,14 @@ class TransactionRepository:
         if limit:
             stmt = stmt.limit(limit)
         
+        result = await self.session.execute(stmt)
+        return result.scalars().all()
+    
+    async def get_all(self, skip: int = 0, limit: int = 10) -> List[Transaction]:
+        """Get all transactions with pagination."""
+        stmt = select(Transaction).order_by(Transaction.transaction_date.desc()).offset(skip).limit(limit).options(
+            joinedload(Transaction.recorder)
+        )
         result = await self.session.execute(stmt)
         return result.scalars().all()
     

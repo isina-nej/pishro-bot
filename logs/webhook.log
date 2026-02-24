@@ -1,0 +1,65 @@
+INFO:     Started server process [19825]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0INFO:     127.0.0.1:42528 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "POST /api/bot/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+
+🚀 شروع بات سرمایه‌گذاری پیشرو...
+📝 لاگ‌ها: /home/sina/Documents/project/pishro-bot/logs/bot.log
+
+✅ بات شروع شد! (PID: 19918)
+
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+📋 لاگ‌های اولیه:
+
+📊 نگاه کردن به لاگ‌های مستقیم:
+   tail -f logs/bot.log
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42528 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [19458]

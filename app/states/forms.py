@@ -3,6 +3,7 @@ from aiogram.fsm.state import State, StatesGroup
 
 class AuthFSM(StatesGroup):
     """States for authentication flow."""
+    waiting_phone = State()
     waiting_phone_verify = State()
 
 

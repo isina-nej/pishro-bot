@@ -1,0 +1,6 @@
+INFO:     Started server process [40638]
+INFO:     Waiting for application startup.
+INFO:__main__:🚀 Starting API server...
+INFO:__main__:✅ Database initialized
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)

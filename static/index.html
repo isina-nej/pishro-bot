@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم سرمایه‌گذاری پیشرو</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        /* Auth Screens */
+        .auth-screen {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #667eea;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .navbar {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .nav-btn {
+            padding: 12px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #667eea;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .investments-list,
+        .transactions-list {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .investment-item,
+        .transaction-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-right: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .investment-item:last-child,
+        .transaction-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .investment-info,
+        .transaction-info {
+            flex: 1;
+        }
+
+        .investment-info h4,
+        .transaction-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .investment-info p,
+        .transaction-info p {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+
+        .amount {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #667eea;
+            text-align: left;
+            margin-left: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-header {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alert-error {
+            background: #fee;
+            color: #c33;
+        }
+
+        .alert-success {
+            background: #efe;
+            color: #3c6;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2.5em;
+        }
+
+        .profile-info {
+            text-align: center;
+        }
+
+        .profile-info h2 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .toggle-btn {
+            color: #667eea;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95em;
+            padding: 0;
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Auth Screen -->
+        <div id="authScreen" class="glass-panel auth-screen">
+            <div class="header">
+                <h1>💰 پیشرو</h1>
+                <p>سیستم مدیریت سرمایه‌گذاری</p>
+            </div>
+
+            <div id="loginForm">
+                <form onsubmit="handleLogin(event)">
+                    <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">ورود</h2>
+                    <div class="form-group">
+                        <label>شماره تلفن</label>
+                        <input type="tel" id="phoneInput" placeholder="09xxxxxxxxx" required>
+                    </div>
+                    <div class="form-group">
+                        <label>کد تایید</label>
+                        <input type="text" id="codeInput" placeholder="کد 5 رقمی" maxlength="5" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">ورود</button>
+                </form>
+
+                <div class="auth-toggle">
+                    <p>حساب ندارید؟ <button class="toggle-btn" onclick="toggleAuthForm()">ثبت نام</button></p>
+                </div>
+            </div>
+
+            <div id="signupForm" style="display: none;">
+                <form onsubmit="handleSignup(event)">
+                    <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">ثبت نام</h2>
+                    <div class="form-group">
+                        <label>نام و نام خانوادگی</label>
+                        <input type="text" id="nameInput" placeholder="نام خود را وارد کنید" required>
+                    </div>
+                    <div class="form-group">
+                        <label>شماره تلفن</label>
+                        <input type="tel" id="phoneSignupInput" placeholder="09xxxxxxxxx" required>
+                    </div>
+                    <div class="form-group">
+                        <label>نقش</label>
+                        <select id="roleInput" required>
+                            <option value="">انتخاب کنید</option>
+                            <option value="investor">سرمایه‌گذار</option>
+                            <option value="accountant">حسابدار</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">ثبت نام</button>
+                </form>
+
+                <div class="auth-toggle">
+                    <p>حساب دارید؟ <button class="toggle-btn" onclick="toggleAuthForm()">ورود</button></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard glass-panel">
+            <!-- Header with User Info -->
+            <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="text-align: left;">
+                    <h1 style="font-size: 1.8em; margin-bottom: 0;">👋 خوش آمدید</h1>
+                    <p id="userDisplayName" style="font-size: 0.9em;"></p>
+                </div>
+                <button class="btn-secondary" style="width: 100px; padding: 8px;" onclick="handleLogout()">خروج</button>
+            </div>
+
+            <!-- Navigation -->
+            <div class="navbar" id="navbar">
+                <button class="nav-btn active" onclick="switchSection('overview')">📊 نمای کلی</button>
+                <button class="nav-btn" onclick="switchSection('investments')">💼 سرمایه‌گذاری‌ها</button>
+                <button class="nav-btn" onclick="switchSection('transactions')">📱 تراکنش‌ها</button>
+                <button class="nav-btn" onclick="switchSection('profile')">👤 پروفایل</button>
+                <button class="nav-btn" onclick="switchSection('settings')">⚙️ تنظیمات</button>
+                <button class="nav-btn" id="adminBtn" style="display: none;" onclick="switchSection('admin')">👑 مدیریت</button>
+            </div>
+
+            <!-- Alert Messages -->
+            <div id="alertBox"></div>
+
+            <!-- Overview Section -->
+            <div id="overview" class="section active">
+                <div class="stats-grid" id="statsGrid">
+                    <!-- Stats will be loaded here -->
+                </div>
+
+                <h2 style="color: #667eea; margin-bottom: 15px;">📈 آخرین سرمایه‌گذاری‌ها</h2>
+                <div class="investments-list" id="recentInvestments">
+                    <!-- Recent investments will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Investments Section -->
+            <div id="investments" class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="color: #667eea;">💼 سرمایه‌گذاری‌های شما</h2>
+                    <button class="btn btn-primary" style="width: 200px; padding: 10px;" onclick="openAddInvestmentModal()">➕ سرمایه‌گذاری جدید</button>
+                </div>
+                <div class="investments-list" id="investmentsList">
+                    <!-- Investments will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Transactions Section -->
+            <div id="transactions" class="section">
+                <h2 style="color: #667eea; margin-bottom: 20px;">📱 تراکنش‌های اخیر</h2>
+                <div class="transactions-list" id="transactionsList">
+                    <!-- Transactions will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div id="profile" class="section">
+                <div class="profile-section">
+                    <div class="profile-avatar" id="profileAvatar">👤</div>
+                    <div class="profile-info">
+                        <h2 id="profileName"></h2>
+                        <p>📱 <span id="profilePhone"></span></p>
+                        <p>👥 <span id="profileRole"></span></p>
+                        <p>✅ <span id="profileStatus"></span></p>
+                    </div>
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 30px; margin-bottom: 15px;">📊 آمار شما</h3>
+                <div class="stats-grid" id="profileStatsGrid">
+                    <!-- Profile stats will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings" class="section">
+                <h2 style="color: #667eea; margin-bottom: 20px;">⚙️ تنظیمات</h2>
+                
+                <div style="background: #f9f9f9; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 15px; color: #333;">🔔 اطلاعیه‌ها</h3>
+                    <label style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <input type="checkbox" id="notificationEmail" checked>
+                        <span style="margin-right: 10px;">اطلاعیه‌های ایمیل</span>
+                    </label>
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" id="notificationPush" checked>
+                        <span style="margin-right: 10px;">اطلاعیه‌های تلگرام</span>
+                    </label>
+                </div>
+
+                <div style="background: #f9f9f9; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 15px; color: #333;">🌙 نمایش</h3>
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" id="darkMode">
+                        <span style="margin-right: 10px;">حالت شب</span>
+                    </label>
+                </div>
+
+                <button class="btn btn-secondary" onclick="handleLogout()">🚪 خروج از حساب</button>
+            </div>
+
+            <!-- Admin Section -->
+            <div id="admin" class="section">
+                <h2 style="color: #667eea; margin-bottom: 20px;">👑 پنل مدیریت</h2>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="loadAllInvestors()">🔄 بارگیری سرمایه‌گذاران</button>
+                    <button class="btn btn-primary" style="flex: 1;" onclick="loadSystemStats()">📊 آمار سیستم</button>
+                </div>
+
+                <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">💰 تمام سرمایه‌گذاران</h3>
+                <div class="investments-list" id="allInvestorsList">
+                    <div class="empty-state"><h3>برای بارگیری روی دکمهٔ بالا کلیک کنید</h3></div>
+                </div>
+
+                <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">📈 آمار سیستم</h3>
+                <div class="stats-grid" id="systemStatsGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Adding Investment -->
+    <div id="investmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">➕ سرمایه‌گذاری جدید</div>
+            <form onsubmit="handleAddInvestment(event)">
+                <div class="form-group">
+                    <label>نوع سرمایه‌گذاری</label>
+                    <select id="investmentType" required>
+                        <option value="">انتخاب کنید</option>
+                        <option value="fixed_rate">سود ثابت</option>
+                        <option value="profit_sharing">مشارکت سود</option>
+                        <option value="partnership">شراکت</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>مبلغ سرمایه‌گذاری</label>
+                    <input type="number" id="investmentAmount" placeholder="بر حسب ریال" required>
+                </div>
+                <div class="form-group">
+                    <label>درصد سود</label>
+                    <input type="number" id="investmentRate" step="0.1" placeholder="درصد" required>
+                </div>
+                <button type="submit" class="btn btn-primary">افزودن</button>
+                <button type="button" class="btn btn-secondary" onclick="closeAddInvestmentModal()">انصراف</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';
+        let currentUser = null;
+
+        // Auth functions
+        function toggleAuthForm() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+            signupForm.style.display = signupForm.style.display === 'none' ? 'block' : 'none';
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const phone = document.getElementById('phoneInput').value;
+            const verificationCode = document.getElementById('codeInput').value;
+
+            try {
+                const response = await fetch(`${API_URL}/api/v1/users/phone/${phone}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    currentUser = data.data;
+                    showDashboard();
+                    loadDashboardData();
+                } else {
+                    showAlert('شماره تلفن یا کد تایید نادرست است', 'error');
+                }
+            } catch (error) {
+                showAlert('خطا در اتصال: ' + error.message, 'error');
+            }
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+            const name = document.getElementById('nameInput').value;
+            const phone = document.getElementById('phoneSignupInput').value;
+            const role = document.getElementById('roleInput').value;
+
+            try {
+                const response = await fetch(`${API_URL}/api/v1/users`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        full_name: name,
+                        phone_number: phone,
+                        role: role,
+                        is_verified: true
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    currentUser = data.data;
+                    showAlert('ثبت نام موفقیت آمیز بود!', 'success');
+                    toggleAuthForm();
+                    showDashboard();
+                    loadDashboardData();
+                } else {
+                    showAlert('خطا در ثبت نام', 'error');
+                }
+            } catch (error) {
+                showAlert('خطا: ' + error.message, 'error');
+            }
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('authScreen').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+        }
+
+        function showDashboard() {
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('dashboard').classList.add('active');
+            document.getElementById('userDisplayName').textContent = currentUser.full_name;
+            
+            // Show admin button if user is admin
+            if (currentUser.role === 'admin') {
+                document.getElementById('adminBtn').style.display = 'block';
+            }
+        }
+
+        async function loadDashboardData() {
+            if (!currentUser) return;
+
+            // Load stats
+            try {
+                const statsResponse = await fetch(`${API_URL}/api/v1/users/${currentUser.id}/stats`);
+                const statsData = await statsResponse.json();
+                displayStats(statsData.data);
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+
+            // Load investments
+            try {
+                const invResponse = await fetch(`${API_URL}/api/v1/investments?investor_id=${currentUser.id}`);
+                const invData = await invResponse.json();
+                displayInvestments(invData.data);
+            } catch (error) {
+                console.error('Error loading investments:', error);
+            }
+
+            // Load transactions
+            try {
+                const txnResponse = await fetch(`${API_URL}/api/v1/transactions?limit=10`);
+                const txnData = await txnResponse.json();
+                displayTransactions(txnData.data);
+            } catch (error) {
+                console.error('Error loading transactions:', error);
+            }
+
+            // Load profile
+            loadProfile();
+        }
+
+        function displayStats(stats) {
+            const statsGrid = document.getElementById('statsGrid');
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <h3>تعداد سرمایه‌گذاری‌ها</h3>
+                    <div class="value">${stats.total_investments || 0}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>کل سرمایه‌گذاری</h3>
+                    <div class="value">${(stats.total_invested || 0).toLocaleString('fa-IR')} ریال</div>
+                </div>
+                <div class="stat-card">
+                    <h3>درآمد تاکنونی</h3>
+                    <div class="value">${(stats.total_profit || 0).toLocaleString('fa-IR')} ریال</div>
+                </div>
+                <div class="stat-card">
+                    <h3>بازدهی کلی</h3>
+                    <div class="value">${(stats.total_roi || 0).toFixed(2)}%</div>
+                </div>
+            `;
+
+            // Also update profile stats
+            document.getElementById('profileStatsGrid').innerHTML = statsGrid.innerHTML;
+        }
+
+        function displayInvestments(investments) {
+            const investmentsList = document.getElementById('investmentsList');
+            const recentInvestments = document.getElementById('recentInvestments');
+
+            if (!investments || investments.length === 0) {
+                investmentsList.innerHTML = '<div class="empty-state"><h3>هیچ سرمایه‌گذاری ثبت نشده است</h3><p>اولین سرمایه‌گذاری خود را شروع کنید</p></div>';
+                recentInvestments.innerHTML = '<div class="empty-state"><h3>هیچ سرمایه‌گذاری ثبت نشده است</h3></div>';
+                return;
+            }
+
+            const html = investments.map(inv => `
+                <div class="investment-item">
+                    <div class="investment-info">
+                        <h4>🎯 ${inv.investment_type === 'fixed_rate' ? 'سود ثابت' : inv.investment_type === 'profit_sharing' ? 'مشارکت سود' : 'شراکت'}</h4>
+                        <p>مبلغ: ${inv.initial_amount.toLocaleString('fa-IR')} ریال</p>
+                        <p>درصد سود: ${inv.expected_roi}%</p>
+                        <p>📅 ${new Date(inv.created_at).toLocaleDateString('fa-IR')}</p>
+                    </div>
+                    <div class="amount">${(inv.expected_profit || 0).toLocaleString('fa-IR')}</div>
+                </div>
+            `).join('');
+
+            investmentsList.innerHTML = html;
+            recentInvestments.innerHTML = html.split('</div>').slice(0, 3).join('</div>') + '</div>';
+        }
+
+        function displayTransactions(transactions) {
+            const transactionsList = document.getElementById('transactionsList');
+
+            if (!transactions || transactions.length === 0) {
+                transactionsList.innerHTML = '<div class="empty-state"><h3>هیچ تراکنشی ثبت نشده است</h3></div>';
+                return;
+            }
+
+            const html = transactions.map(txn => `
+                <div class="transaction-item">
+                    <div class="transaction-info">
+                        <h4>${txn.transaction_type === 'deposit' ? '➕ واریز' : '➖ برداشت'}</h4>
+                        <p>مبلغ: ${txn.amount.toLocaleString('fa-IR')} ریال</p>
+                        <p>📅 ${new Date(txn.transaction_date).toLocaleDateString('fa-IR')}</p>
+                    </div>
+                    <div class="amount">${txn.amount.toLocaleString('fa-IR')} ریال</div>
+                </div>
+            `).join('');
+
+            transactionsList.innerHTML = html;
+        }
+
+        function loadProfile() {
+            if (!currentUser) return;
+            document.getElementById('profileName').textContent = currentUser.name;
+            document.getElementById('profilePhone').textContent = currentUser.phone_number;
+            const roleMap = {
+                'investor': 'سرمایه‌گذار',
+                'accountant': 'حسابدار',
+                'admin': 'مدیر سیستم'
+            };
+            document.getElementById('profileRole').textContent = roleMap[currentUser.role] || currentUser.role;
+            document.getElementById('profileStatus').textContent = 
+                currentUser.is_verified ? '✅ تایید شده' : '❌ تایید نشده';
+            document.getElementById('profileAvatar').textContent = currentUser.name.charAt(0);
+        }
+
+        function switchSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            // Hide all nav buttons active state
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            // Mark nav button as active
+            event.target.classList.add('active');
+
+            // Reload data when switching sections
+            if (sectionId === 'investments' || sectionId === 'overview') {
+                loadDashboardData();
+            }
+        }
+
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                alertBox.innerHTML = '';
+            }, 5000);
+        }
+
+        function openAddInvestmentModal() {
+            document.getElementById('investmentModal').classList.add('active');
+        }
+
+        function closeAddInvestmentModal() {
+            document.getElementById('investmentModal').classList.remove('active');
+        }
+
+        async function handleAddInvestment(event) {
+            event.preventDefault();
+            
+            if (!currentUser) return;
+
+            const type = document.getElementById('investmentType').value;
+            const amount = parseInt(document.getElementById('investmentAmount').value);
+            const rate = parseFloat(document.getElementById('investmentRate').value);
+
+            try {
+                const response = await fetch(`${API_URL}/api/v1/investments`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        investor_id: currentUser.id,
+                        investment_type: type,
+                        initial_amount: amount,
+                        expected_roi: rate,
+                        description: `${type} - ${amount.toLocaleString('fa-IR')} ریال`
+                    })
+                });
+
+                if (response.ok) {
+                    showAlert('سرمایه‌گذاری با موفقیت افزوده شد!', 'success');
+                    closeAddInvestmentModal();
+                    loadDashboardData();
+                    document.getElementById('investmentModal').querySelector('form').reset();
+                } else {
+                    showAlert('خطا در افزودن سرمایه‌گذاری', 'error');
+                }
+            } catch (error) {
+                showAlert('خطا: ' + error.message, 'error');
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('investmentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAddInvestmentModal();
+            }
+        });
+
+        // Admin Functions
+        async function loadAllInvestors() {
+            try {
+                showAlert('بارگیری دادهٔ سرمایه‌گذاران...', 'success');
+                const response = await fetch(`${API_URL}/api/v1/users?skip=0&limit=100`);
+                const data = await response.json();
+                
+                // Filter only investors
+                const investors = Array.isArray(data) ? data.filter(u => u.role === 'investor') : [];
+                displayAllInvestors(investors);
+            } catch (error) {
+                showAlert('خطا در بارگیری سرمایه‌گذاران: ' + error.message, 'error');
+            }
+        }
+
+        function displayAllInvestors(investors) {
+            const listContainer = document.getElementById('allInvestorsList');
+            
+            if (!investors || investors.length === 0) {
+                listContainer.innerHTML = '<div class="empty-state"><h3>هیچ سرمایه‌گذاری یافت نشد</h3></div>';
+                return;
+            }
+
+            const html = investors.map(investor => `
+                <div class="investment-item" onclick="viewInvestorDetails(${investor.id}, '${investor.name}')">
+                    <div class="investment-info">
+                        <h4>💰 ${investor.name}</h4>
+                        <p>📱 ${investor.phone_number}</p>
+                        <p>✅ ${investor.is_verified ? 'تایید شده' : 'تایید نشده'}</p>
+                        <p>📅 از تاریخ: ${new Date(investor.created_at).toLocaleDateString('fa-IR')}</p>
+                    </div>
+                    <div class="amount" style="text-align: center;">
+                        <div>ID: ${investor.id}</div>
+                        <button class="btn btn-primary" style="width: 100px; padding: 5px; margin-top: 10px;">جزئیات</button>
+                    </div>
+                </div>
+            `).join('');
+
+            listContainer.innerHTML = html;
+        }
+
+        async function viewInvestorDetails(investorId, investorName) {
+            try {
+                const invResponse = await fetch(`${API_URL}/api/v1/investments?user_id=${investorId}&limit=100`);
+                const invData = await invResponse.json();
+                
+                let details = `👤 ${investorName}\n\n💼 سرمایه‌گذاری‌ها:\n`;
+                if (invData.data && invData.data.length > 0) {
+                    invData.data.forEach(inv => {
+                        details += `• مبلغ: ${inv.initial_amount.toLocaleString('fa-IR')} تومان\n`;
+                        details += `  شروع: ${inv.start_date}\n`;
+                    });
+                } else {
+                    details += 'هیچ سرمایه‌گذاری ثبت نشده';
+                }
+                
+                alert(details);
+            } catch (error) {
+                showAlert('خطا: ' + error.message, 'error');
+            }
+        }
+
+        async function loadSystemStats() {
+            try {
+                showAlert('بارگیری آمار سیستم...', 'success');
+                
+                const usersResponse = await fetch(`${API_URL}/api/v1/users?skip=0&limit=1000`);
+                const usersData = await usersResponse.json();
+                
+                const invResponse = await fetch(`${API_URL}/api/v1/investments?skip=0&limit=1000`);
+                const invData = await invResponse.json();
+                
+                let totalCapital = 0;
+                let investments = [];
+                
+                // Handle different response formats
+                if (Array.isArray(invData)) {
+                    investments = invData;
+                } else if (invData.data && Array.isArray(invData.data)) {
+                    investments = invData.data;
+                }
+                
+                investments.forEach(inv => {
+                    totalCapital += inv.initial_amount;
+                });
+                
+                let users = [];
+                if (Array.isArray(usersData)) {
+                    users = usersData;
+                } else if (usersData.data && Array.isArray(usersData.data)) {
+                    users = usersData.data;
+                }
+                
+                const investors = users.filter(u => u.role === 'investor');
+                
+                const statsGrid = document.getElementById('systemStatsGrid');
+                statsGrid.innerHTML = `
+                    <div class="stat-card">
+                        <h3>تعداد سرمایه‌گذاران</h3>
+                        <div class="value">${investors.length}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>تعداد سرمایه‌گذاری‌ها</h3>
+                        <div class="value">${investments.length}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>کل سرمایه‌گذاری</h3>
+                        <div class="value">${(totalCapital / 1_000_000).toFixed(1)}M</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>میانگین سرمایه</h3>
+                        <div class="value">${investments.length > 0 ? (totalCapital / investments.length).toLocaleString('fa-IR') : '۰'}</div>
+                    </div>
+                `;
+            } catch (error) {
+                showAlert('خطا: ' + error.message, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
